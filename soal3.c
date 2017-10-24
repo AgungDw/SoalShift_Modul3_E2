@@ -15,7 +15,7 @@ void *kepiting_kelaparan(void *arg)
 	{
 		sleep (20);
 		kepiting_status-=10;
-		if (kepiting_status<0)
+		if (kepiting_status<=0)
 		{
 		//give signal to end game
 			status_game=0;
@@ -30,7 +30,7 @@ void *lohan_kelaparan(void *arg)
 	{
 		sleep(10);
 		lohan_status-=15;
-		if (lohan_kelaparan<0)
+		if (lohan_kelaparan<=0)
 		{
 		//give signal to end game, and end its misery
 		status_game=0;
@@ -44,7 +44,7 @@ void *game(void *arg)
 	int menu;
 	while (status_game==1)
 	{
-		printf("Menu:\n 1 untuk memberi makan lohan\n 2 untuk memberi makan kepiting");
+		printf("Menu:\n 1 untuk memberi makan lohan\n 2 untuk memberi makan kepiting\n");
 		scanf("%d", &menu);
 		if (menu==1)
 		{
