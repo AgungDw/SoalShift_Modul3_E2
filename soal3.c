@@ -9,7 +9,7 @@ int kepiting_status, lohan_status;
 
 int status_game; //signal to determine the game. 0 if the game was end
 
-void kepiting_kelaparan(void *arg)
+void *kepiting_kelaparan(void *arg)
 {
 	while (status_game==1) //as long as the game is running the crab will continue to starve
 	{
@@ -21,10 +21,10 @@ void kepiting_kelaparan(void *arg)
 			status_game=0;
 		}	
 	}
-	
+	return 0;
 }
 
-void lohan_kelaparan(void *arg)
+void *lohan_kelaparan(void *arg)
 {
 	while (status_game==1)
 	{
@@ -36,10 +36,10 @@ void lohan_kelaparan(void *arg)
 		status_game=0;
 		}	
 	}
-	
+	return 0;
 }
 
-void game(void *arg)
+void *game(void *arg)
 {
 	int menu;
 	while (status_game==1)
@@ -54,7 +54,7 @@ void game(void *arg)
 				status_game=0;
 			}
 		}
-		if else (menu==2)
+		else if (menu==2)
 		{
 			kepiting_status+=10;
 			if (kepiting_status>100)
@@ -63,12 +63,14 @@ void game(void *arg)
 			}
 		}
 	}
+	printf("You lose\n");
+	return 0;
 }
 
 
 int main(void)
 {
-	status_lohan=status_kepiting=100;
+	lohan_status=kepiting_status=100;
 	status_game=1;
 	int err;
 	pthread_t tid[3];
