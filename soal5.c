@@ -7,13 +7,17 @@
 
 int main (void)
 {
+	
 	char input[256];
 	gets(input);
-
-	int itterator= strlen(input);
+	if (strncmp(input, "./cari", 5));
+	int itterator;
+	itterator= strlen(input);
 	int leng=itterator;
 	int temp=leng;
 	char passer [50];
+	int i=0;
+	pthread_t tid[10];
 	for (itterator-=1; itterator>5;itterator--)
 	{
 		if(input[itterator] == ' '&&itterator!=leng)
@@ -27,7 +31,9 @@ int main (void)
 			}
 			passer[y]='\0';
 			temp=itterator;
-			printf("%s\n", passer);
+			//printf("%s\n", passer);
+			pthread_create(&tid[i], NULL, finder, (void *)x);
+			i++;
 		}
 	}
 }
