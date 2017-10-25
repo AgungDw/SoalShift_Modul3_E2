@@ -9,6 +9,13 @@ int index_tebakan[4],pasang_terakhir,skor1=0,skor2=0;
 bool turn=0,lubang1[16],lubang2[16],hitung=0;
 pthread_t tid[2];
 
+void *hitung_nilai_pasang(void *arg){
+    if(!turn)skor1+=pasang_terakhir;
+    else skor2+=pasang_terakhir;
+    hitung=1;
+    return NULL;
+}
+
 int main()
 {
 	string player1,player2;
@@ -112,4 +119,6 @@ int main()
         cout<<"Skor saat ini:\n"<<player1<<": "<<skor1<<endl<<player2<<": "<<skor2<<endl;
         if(skor1>9||skor2>9||(ranjau1>15||ranjau2>15))break;
     }
+    cout<<"Skor akhir:\n"<<player1<<": "<<skor1<<endl<<player2<<": "<<skor2<<endl;
+    return 0;
 }
