@@ -16,6 +16,22 @@ void *hitung_nilai_pasang(void *arg){
     return NULL;
 }
 
+
+void *hitung_nilai_tebak(void *arg){
+    if(!turn)
+        for(int i=0;i<4;i++){
+            if(lubang1[index_tebakan[i]])++skor1;
+            else ++skor2;
+        }
+    else
+        for(int i=0;i<4;i++){
+            if(lubang2[index_tebakan[i]])++skor2;
+            else ++skor1;
+        }
+    hitung=0;
+    return NULL;
+}
+
 int main()
 {
 	string player1,player2;
