@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <pthread.h>
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <netinet/in.h>
@@ -10,7 +11,7 @@ long weapon_ammount[6];
 char weapon_name [6][10];
 int new_socket;
 
-void listener(void * arg)
+void * listener(void * arg)
 {
     char input[100];
     char name[10];
@@ -20,24 +21,37 @@ void listener(void * arg)
     char* ptr;
     while (1)
     {
-        valread = read( new_socket , input, 100);    
-        while(input[itterator]!=' ')
+        read( new_socket , input, 100);    
+        if (input[0]==0)
         {
-            itterator++;            
-        }
-        strncpy(input, name, itterator);
-        name[itterator]='\0';
-
-        temp=strchr(input, ' ');
-        ammount=strtol(temp, ptr, 10);
-        
-        for (itterator=0; itterator<6; itterator++)
-        {
-            if (strcmp (weapon_name[itterator],name)==0)
+            for (itterator=0; itterator<6; itterator++)
             {
-                weapon_ammount[itterator]+=ammount;
+                sprintf (input,"%s %d", weapon_name[itterator], weapon_ammount[itterator]);
+                if (weapon_ammount>0) send(new_socket , input , strlen(input) , 0 );
             }
         }
+        else if (input[0]==1)
+        {
+            read( new_socket , input, 100);    
+            while(input[itterator]!=' ')
+            {
+                itterator++;            
+            }
+            strncpy(input, name, itterator);
+            name[itterator]='\0';
+
+            strcpy(strchr(input, ' '), temp);
+            ammount=strtol(temp, &ptr, 10);
+
+            for (itterator=0; itterator<6; itterator++)
+            {
+                if (strcmp (weapon_name[itterator],name)==0)
+                {
+                    weapon_ammount[itterator]+=ammount;
+                }
+            }    
+        }
+        
 
     }
     
@@ -46,7 +60,7 @@ void listener(void * arg)
 
 int main ()
 {
-	int server_fd, valread;
+	int server_fd;
     struct sockaddr_in address;
     int opt = 1;
     int addrlen = sizeof(address);
@@ -98,8 +112,8 @@ int main ()
 		printf("\n can't create thread : [%s]",strerror(err));
 	}
 
-    int opt;
     int itterator;
+    long input_amm;
     while (1)
     {
     	printf("1 untuk lihat stok senjata\n2 untuk tambah stok senjata");	
@@ -108,23 +122,23 @@ int main ()
         {
             for (itterator=0; itterator<6; itterator++)
             {
-                printf("%s %d\n", weapon_name[itterator], weapon_ammount[itterator]);
+                if (weapon_ammount>0) printf("%s %li\n", weapon_name[itterator], weapon_ammount[itterator]);
             }
         }
         else if (opt==2)
         {
-            scanf("%s %d", input, opt);
+            scanf("%s %li", input,&input_amm);
             for (itterator=0; itterator<6; itterator++)
             {
                 if (strcmp (weapon_name[itterator],input)==0)
                 {
-                    weapon_ammount[itterator]+=opt;
+                    weapon_ammount[itterator]+=input_amm;
                 }
             }
         }
         else 
         {
-            input salah;
+            printf("input salah");
         }
     }
     
