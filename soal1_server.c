@@ -6,15 +6,47 @@
 #include <unistd.h>
 #define PORT 8080
 
-int weapon_ammount[6];
+long weapon_ammount[6];
 char weapon_name [6][10];
+int new_socket;
 
-void listener(void * arg);
+void listener(void * arg)
+{
+    char input[100];
+    char name[10];
+    char temp[10];
+    long ammount;
+    int itterator=0;
+    char* ptr;
+    while (1)
+    {
+        valread = read( new_socket , input, 100);    
+        while(input[itterator]!=' ')
+        {
+            itterator++;            
+        }
+        strncpy(input, name, itterator);
+        name[itterator]='\0';
+
+        temp=strchr(input, ' ');
+        ammount=strtol(temp, ptr, 10);
+        
+        for (itterator=0; itterator<6; itterator++)
+        {
+            if (strcmp (weapon_name[itterator],name)==0)
+            {
+                weapon_ammount[itterator]+=ammount;
+            }
+        }
+
+    }
+    
+}
 
 
 int main ()
 {
-	int server_fd, new_socket, valread;
+	int server_fd, valread;
     struct sockaddr_in address;
     int opt = 1;
     int addrlen = sizeof(address);
