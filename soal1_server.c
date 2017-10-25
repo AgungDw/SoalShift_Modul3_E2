@@ -38,11 +38,11 @@ int main ()
     *weapon_ammount[3]=0;
     *weapon_ammount[4]=0;
     *weapon_ammount[5]=0;
-
+    int is_weapon_true=1;
     while (1)
     {
-    	printf("1 untuk lihat stok senjata\n2 untuk tambah stok senjata");	
-    	scanf("%d", &opt);
+        printf("1 untuk lihat stok senjata\n2 untuk tambah senjata\n"); 
+        scanf("%d", &opt);
         if (opt==1)
         {
             for (itterator=0; itterator<6; itterator++)
@@ -52,14 +52,17 @@ int main ()
         }
         else if (opt==2)
         {
+            is_weapon_true=0;
             scanf("%s %d", input,&input_amm);
             for (itterator=0; itterator<6; itterator++)
             {
                 if (strcmp (weapon_name[itterator],input)==0)
                 {
                     *weapon_ammount[itterator]+=input_amm;
+                    is_weapon_true=1;
                 }
             }
+            if (is_weapon_true==0) printf("Salah nama senjata?\n");
         }
         else 
         {
