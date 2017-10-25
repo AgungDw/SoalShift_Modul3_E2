@@ -20,8 +20,8 @@ int main ()
 {
 	int j=0,k=0,l=0,len,err;
 	char trap[11],input[1000],temp[500][10];
-	scanf("%s",trap);
-	getchar();
+	//scanf("%s",trap);
+	//getchar();
 	gets(input);
 	len=strlen(input);
 	for(i=0;i<len;i++){
