@@ -7,8 +7,9 @@
 pthread_t tid[500];
 char baris[10000],temp[500][100];
 FILE *book;
-int jumlah[500],selesai=0,i,j;
+int jumlah[500],dibuat=0,i,j;
 void *cari_nama(void *arg){
+	++dibuat;
 	int I=i,x,y,len=strlen(baris),len2=strlen(temp[I]);
 	for(x=0;x<len;x++){
 		for(y=0;y<len2;y++){
@@ -18,7 +19,6 @@ void *cari_nama(void *arg){
 			++jumlah[I];
 		}
 	}
-	++selesai;
 	return NULL;
 }
 
@@ -50,8 +50,9 @@ int main(){
 			printf("Program error. Please restart the program\n");
 			return -1;
 		}
-		while(selesai<=i);
+		while(dibuat<=i);
 	}
+	while(dibuat<i);
 	for(i=0;i<=j;i++){
 		printf("%s : %d\n",temp[i],jumlah[i]);
 	}
