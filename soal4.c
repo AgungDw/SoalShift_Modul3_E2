@@ -3,7 +3,18 @@
 #include <unistd.h>
 #include <string.h>
 
-void  * hitung_fak (void* arg);
+pthread_t tid[500];
+int n[500],size,selesai=0,i;
+
+void  * hitung_fak (void* arg)
+{
+	int z;
+	long long hasil=1;
+	for(z=2;z<=n[i];z++)hasil*=(long long)z;
+	printf("Hasil %d! = %lld\n",n[i],hasil);
+	++selesai;
+	return NULL;
+}
 
 int main ()
 {
