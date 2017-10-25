@@ -2,26 +2,30 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <string.h>
+#include <algorithm>
+using namespace std;
 
 pthread_t tid[500];
-int n[500],size,selesai=0,i;
+int n[500],size,mulai=0,i;
+long long hasil[500];
 
-void  * hitung_fak (void* arg)
-{
+void *hitung_fak(void *arg){
+	int a =i;
+	++mulai;
 	int z;
-	long long hasil=1;
-	for(z=2;z<=n[i];z++)hasil*=(long long)z;
-	printf("Hasil %d! = %lld\n",n[i],hasil);
-	++selesai;
+	long long hasil_temp=1;
+	for(z=2;z<=n[a];z++)hasil_temp*=(long long)z;
+	//printf("Hasil %d! = %lld\n",a,hasil);
+	hasil[a]=hasil_temp;
 	return NULL;
 }
+int main(){
+	memset(hasil,-1,500);
 
-int main ()
-{
 	int j=0,k=0,l=0,len,err;
 	char trap[11],input[1000],temp[500][10];
-	//scanf("%s",trap);
-	//getchar();
+	scanf("%s",&trap);
+	getchar();
 	gets(input);
 	len=strlen(input);
 	for(i=0;i<len;i++){
@@ -37,26 +41,21 @@ int main ()
 		}
 	}
 	n[l]=atoi(temp[j]);
-	int x,y, key;
-	for (x = 1; x <= j; x++)
-   	{
-       key = n[x];
-       y = x-1;
-       while (y >= 0 && n[y] > key)
-       {
-           n[y+1] = n[y];
-           y = y-1;
-       }
-       n[y+1] = key;
-   	}
-
-   	for(i=0;i<=j;i++){
+	sort(n,n+j+1);
+	
+	for(i=0;i<=j;i++){
 		err=pthread_create(&(tid[i]),NULL,&hitung_fak,NULL);
 		if(err!=0){
 			printf("Program error. Please restart the program\n");
 			return -1;
 		}
-		while(selesai<=i);
+		while(mulai<=i);
+	}
+	int x=0;
+	while (hasil[x]!=-1)
+	{
+		printf("Hasil %d! = %lld\n",n[x],hasil[x]);
+		x+=1;
 	}
 	return 0;
 }
