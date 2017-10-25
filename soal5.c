@@ -3,6 +3,25 @@
 #include <unistd.h>
 #include <string.h>
 
+pthread_t tid[2];
+char baris[10000],temp[500][100];
+FILE *book;
+int jumlah[500],selesai=0,i,j;
+void *cari_nama(void *arg){
+	int x,y,len=strlen(baris),len2=strlen(temp[i]);
+	for(x=0;x<len;x++){
+		for(y=0;y<len2;y++){
+			if(baris[x+y]!=temp[i][y])break;
+		}
+		if(y==len2){
+			++jumlah[i];
+		}
+	}
+	++selesai;
+	return NULL;
+}
+
+
 int main ()
 {
 	memset(jumlah,0,500);
