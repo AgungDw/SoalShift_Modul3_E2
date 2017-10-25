@@ -2,28 +2,27 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <string.h>
+#include <algorithm>
 
-pthread_t tid[2];
+pthread_t tid[500];
 char baris[10000],temp[500][100];
 FILE *book;
 int jumlah[500],selesai=0,i,j;
 void *cari_nama(void *arg){
-	int x,y,len=strlen(baris),len2=strlen(temp[i]);
+	int I=i,x,y,len=strlen(baris),len2=strlen(temp[I]);
 	for(x=0;x<len;x++){
 		for(y=0;y<len2;y++){
-			if(baris[x+y]!=temp[i][y])break;
+			if(baris[x+y]!=temp[I][y])break;
 		}
 		if(y==len2){
-			++jumlah[i];
+			++jumlah[I];
 		}
 	}
 	++selesai;
 	return NULL;
 }
 
-
-int main ()
-{
+int main(){
 	memset(jumlah,0,500);
 	int k=0,l=0,len,err,n[1000];
 	char trap[11],input[1000];
@@ -57,5 +56,4 @@ int main ()
 		printf("%s : %d\n",temp[i],jumlah[i]);
 	}
 	return 0;
-}
 }
