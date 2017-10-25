@@ -20,7 +20,7 @@ int main ()
 {
 	int j=0,k=0,l=0,len,err;
 	char trap[11],input[1000],temp[500][10];
-	scanf("%s",&trap);
+	scanf("%s",trap);
 	getchar();
 	gets(input);
 	len=strlen(input);
@@ -38,7 +38,7 @@ int main ()
 	}
 	n[l]=atoi(temp[j]);
 	int x,y, key;
-	for (x = 1; x < j+1; x++)
+	for (x = 1; x <= j; x++)
    	{
        key = n[x];
        y = x-1;
@@ -47,8 +47,9 @@ int main ()
            n[y+1] = n[y];
            y = y-1;
        }
-       arr[y+1] = key;
+       n[y+1] = key;
    	}
+
    	for(i=0;i<=j;i++){
 		err=pthread_create(&(tid[i]),NULL,&hitung_fak,NULL);
 		if(err!=0){
