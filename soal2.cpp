@@ -69,4 +69,47 @@ int main()
                 turn=1;
             }
         }
+        else {
+                pasang_terakhir=input_ranjau;
+                ranjau2+=input_ranjau;
+                for(int i=1;i<=input_ranjau;i++){
+                    cout<<"Ranjau ke "<<ranjau2-input_ranjau+i<<" diisi pada lubang ke (nomer lubang dimulai dari 0): ";
+                    cin>>index_ranjau;
+                    if(index_ranjau>15||index_ranjau<0){
+                        cout<<"Nomer lubang hanya 0 hingga 15\n";
+                        --i;
+                    }
+                    else if(lubang2[index_ranjau]!=0){
+                        cout<<"Lubang tersebut telah diisi\n";
+                        --i;
+                    }
+                    else lubang2[i-1]=1;
+                }
+                cout<<player1<<" tebak ranjau\n";
+                for(int i=1;i<=4;i++){
+                    cout<<"Tebakan ke "<<i<<": ";
+                    cin>>index_tebakan[i-1];
+                    if(index_tebakan[i-1]>15||index_tebakan[i-1]<0){
+                        cout<<"Nomer lubang hanya 0 hingga 15\n";
+                        --i;
+                    }
+                }
+                err=pthread_create(&(tid[0]),NULL,&hitung_nilai_pasang,NULL);
+                if(err!=0){
+                    cout<<"Game Error. Please restart the game\n";
+                    return -1;
+                }
+                while(!hitung);
+                err=pthread_create(&(tid[1]),NULL,&hitung_nilai_tebak,NULL);
+                if(err!=0){
+                    cout<<"Game Error. Please restart the game\n";
+                    return -1;
+                }
+                while(hitung);
+                turn=0;
+            }
+        }
+        cout<<"Skor saat ini:\n"<<player1<<": "<<skor1<<endl<<player2<<": "<<skor2<<endl;
+        if(skor1>9||skor2>9||(ranjau1>15||ranjau2>15))break;
+    }
 }
